@@ -1,0 +1,137 @@
+/* Début du CSS Global */
+/* Importation de la font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+* {
+   margin: 0;
+   font-family: var(--police);
+}
+
+body {
+   background-color: var(--color2);
+}
+
+/* Création variable */
+
+:root {
+   --color: #6A5ACD;
+   --color2: #d8d8d8;
+   --color3: white;
+   --colorerror: red;
+   --police : 'Poppins'
+}
+
+/* Début CSS class contain */
+.contain-1440 {
+   max-width: 1440px;
+   margin: auto;
+}
+
+
+/* Début CSS main */
+section {
+   max-width: 600px;
+   border-radius: 23px 23px 33% 23px;
+   margin: 100px auto 100px auto;
+   padding: 100px;
+   background-color: var(--color3);
+
+}
+
+form {
+   display: grid;
+   gap: 50px;
+}
+
+form #inputdiv  {
+   padding-right: 100px;
+}
+
+form>div{
+   display: flex;
+   align-items: baseline;
+   gap: 20px;
+}
+
+form>div>div {
+   display: grid;
+   gap: 10px;
+}
+
+form #inputdiv label {
+   font-size: 30px;
+   text-transform: uppercase;
+}
+
+form #inputdiv input  {
+   height: 60px;
+   border-radius: 10px;
+}
+
+form #inputdiv input::placeholder {
+   font-size: 30px;
+   padding: 20px;
+   color: var(--color2);
+}
+
+form #inputdiv .input {
+   border: 1px solid var(--color2);
+}
+
+.input_error {
+   border: 1px solid var(--colorerror);
+}
+
+form hr {
+   height: 0px;
+   width: 85%;
+   border: 1px solid var(--color2);
+}
+
+form #submit {
+   width: 60px;
+   height: 60px;
+   background-image: url(./assets/images/icon-arrow.svg);
+   background-repeat: no-repeat;
+   background-position: center;
+   border: none;
+   border-radius: 50%;
+   background-color: black;
+   justify-self: right;
+}
+
+form #submitsend {
+   width: 60px;
+   height: 60px;
+   background-image: url(./assets/images/icon-arrow.svg);
+   background-repeat: no-repeat;
+   background-position: center;
+   border: none;
+   border-radius: 50%;
+   justify-self: right;
+   background-color: var(--color);
+}
+
+#result p {
+   font-size: 60px;
+   font-weight: 700;
+}
+
+.p_error {
+   color: var(--colorerror);
+   font-weight: 400;
+   font-size: 16px;
+}
+
+#result p span:nth-child(1) {
+   color: var(--color);
+   font-size: 60px;
+   font-weight: 700;
+}
+
+
+
+/* Début CSS footer */
+footer {
+   text-align: center;
+}
+
