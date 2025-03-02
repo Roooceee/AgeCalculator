@@ -1,3 +1,8 @@
+const day_label = document.querySelector("#label_day");
+const month_label = document.querySelector("#label_month");
+const year_label = document.querySelector("#label_year");
+
+
 const day_field = document.querySelector("#day");
 const month_field = document.querySelector("#month");
 const year_field = document.querySelector("#year");
@@ -13,11 +18,10 @@ function showError(inputField, message,classCSS=null) {
    }
 }   
 
-function clearError(field){
-   if(field.className==="inputerror"){
+function clearError(field,classCSS){
+   if(field.className===classCSS){
       field.className="";
    }
-   field.className = "";
 }
    
    function calculAgeExact(day, month,year){
@@ -89,10 +93,13 @@ function clearError(field){
             }
          }
          else {
+            showError(day_label,"","error")
+            showError(month_label,"","error")
+            showError(year_label,"","error")
             showError(day_field, "","input_error");
             showError(month_field, "","input_error");
             showError(year_field, "","input_error");
-            showError(inputdiv,"<p class='p_error'>Must be in the past<p>",);
+            showError(inputdiv,"<p class='error'>Must be in the past<p>",);
          }
 
       }
@@ -110,10 +117,13 @@ function clearError(field){
          if(dateBorn.getFullYear() != year || dateBorn.getMonth() != month-1 || dateBorn.getDate() != day){
             console.log("Date n'existe pas")
 
+            showError(day_label,"","error")
+            showError(month_label,"","error")
+            showError(year_label,"","error")
             showError(day_field, "","input_error");
             showError(month_field, "","input_error");
             showError(year_field, "","input_error");
-            showError(inputdiv,"<p class='p_error'>Must be a date valid</p>")
+            showError(inputdiv,"<p class='error'>Must be a date valid</p>")
             return false
          }
    }
@@ -124,11 +134,11 @@ function verifyDay(day){
 
    if(day){
       if(day>=1 && day<=31){
-         clearError(day_field);
+         showError(day_label,"","error")
+         clearError(day_field,"input_error");
          return true;
       }
-      console.log("Day no valid")
-      showError(day_field, "<p class='p_error'>Must be a valid day</p>","input_error")
+      showError(day_field, "<p class='error'>Must be a valid day</p>","input_error")
       return false;
    }
 
@@ -138,10 +148,11 @@ function verifyMonth(month){
 
    if(month){
       if(month>=1 && month<=12){
-         clearError(month_field)
+         showError(month_label,"","error")
+         clearError(month_field,"input_error")
          return true;
       }
-      showError(month_field, "<p class='p_error'>Must be a valid month</p>","input_error")
+      showError(month_field, "<p class='error'>Must be a valid month</p>","input_error")
       return false;
    }
 
@@ -151,10 +162,11 @@ function verifyYear(year){
 
    if(year){
       if(year>=1900){
-         clearError(year_field)
+         showError(year_label,"","error")
+         clearError(year_field,"input_error")
          return true;
       }
-      showError(year_field, "<p class='p_error'>Must be a valid year</p>","input_error")
+      showError(year_field, "<p class='error'>Must be a valid year</p>","input_error")
       return false;
    }
 
@@ -166,21 +178,24 @@ submit.addEventListener("click",(e)=>{
    
    e.preventDefault();
 
-   p_error = document.querySelectorAll(".p_error");
-   if(p_error){
-      p_error.forEach(element => {
+   error = document.querySelectorAll(".error");
+   if(error){
+      error.forEach(element => {
          element.remove();
       });
    }
 
    if(day_field.value.trim()===""){
-      showError(day_field, "<p class='p_error'>This field is required</p>","input_error")
+      showError(day_label,"","error")
+      showError(day_field, "<p class='error'>This field is required</p>","input_error")
    }
    if(month_field.value.trim()===""){
-      showError(month_field, "<p class='p_error'>This field is required</p>","input_error")
+      showError(month_label,"","error")
+      showError(month_field, "<p class='error'>This field is required</p>","input_error")
    }
-   if(year_field.value.trim()===""){   
-      showError(year_field, "<p class='p_error'>This field is required</p>","input_error")
+   if(year_field.value.trim()===""){ 
+      showError(year_label,"","error")  
+      showError(year_field, "<p class='error'>This field is required</p>","input_error")
    }
 
    submit.id="submitsend";
