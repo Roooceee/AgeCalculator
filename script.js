@@ -1,129 +1,134 @@
-const day_label = document.querySelector("#label_day");
-const month_label = document.querySelector("#label_month");
-const year_label = document.querySelector("#label_year");
+const dayLabel = document.querySelector("#label_day");
+const monthLabel = document.querySelector("#label_month");
+const yearLabel = document.querySelector("#label_year");
 
 
-const day_field = document.querySelector("#day");
-const month_field = document.querySelector("#month");
-const year_field = document.querySelector("#year");
+const dayField = document.querySelector("#day");
+const monthField = document.querySelector("#month");
+const yearField = document.querySelector("#year");
+
+const resultYear = document.querySelector("#result_year");
+const resultMonth = document.querySelector("#result_month");
+const resultDate = document.querySelector("#result_date");
+
+const result_text_year = document.querySelector("#text_result_year")
+const result_text_month = document.querySelector("#text_result_month")
+const result_text_day = document.querySelector("#text_result_date")
+
+
 
 const submit = document.querySelector("#submit");
 
-function showError(inputField, message,classCSS=null) {
+function ShowMessageAndOrAddClassCSS(element, message="",classCSS=null) {
    if(classCSS!=null){
-      inputField.className= `${classCSS}`;
+      element.className= `${classCSS}`;
    }
    if(message!=""){
-      inputField.insertAdjacentHTML("afterend",message)
+      element.insertAdjacentHTML("afterend",message)
    }
 }   
 
-function clearError(field,classCSS){
-   if(field.className===classCSS){
-      field.className="";
-   }
-}
+function calculAgeExact(day, month,year){
+      
+   isFieldNoEmpty = true;
    
-   function calculAgeExact(day, month,year){
+   if(dayField.value.trim()==="") isFieldNoEmpty=false;
+   if(monthField.value.trim()==="") isFieldNoEmpty=false;
+   if(yearField.value.trim()==="") isFieldNoEmpty=false;
+
+   isAllValid = true;
+
+   if(!verifyDay(day)) isAllValid = false;
+   if(!verifyMonth(month)) isAllValid = false;
+   if(!verifyYear(year)) isAllValid = false;
+
+   
+   if(isAllValid && isFieldNoEmpty){
+   
+      const dateBorn = new Date(year, month-1, day); // Crée la date de naissance avec les parametre day month et year
+      const dateCurrent = new Date(); // Crée la date d'aujourd'hui
       
-      isFieldNoEmpty = true;
-      
-      if(day_field.value.trim()==="") isFieldNoEmpty=false;
-      if(month_field.value.trim()==="") isFieldNoEmpty=false;
-      if(year_field.value.trim()==="") isFieldNoEmpty=false;
-      console.log("isFieldNoEmpty : "+isFieldNoEmpty)
-
-      isAllValid = true;
-
-      if(!verifyDay(day)) isAllValid = false;
-      if(!verifyMonth(month)) isAllValid = false;
-      if(!verifyYear(year)) isAllValid = false;
-      console.log("isAllValid : "+isAllValid)
-      
-
-      if(isAllValid && isFieldNoEmpty){
-
-         const dateBorn = new Date(year, month-1, day); // Crée la date de naissance avec les parametre day month et year
-         const dateCurrent = new Date();
+      if(verifyDateInThePast(dateBorn)) {
          
-         if(dateBorn<dateCurrent){
-            
-            if(verifyDateExist(dateBorn,day,month,year)!=false){
-      
-               // Calcul de l'âge
-               let age_year = dateCurrent.getFullYear() - dateBorn.getFullYear();
-               let age_month = dateCurrent.getMonth() - dateBorn.getMonth();
-               let age_date = dateCurrent.getDate() - dateBorn.getDate();
+         if(verifyDateExist(dateBorn,day,month,year)!=false){
    
-               //  Ajuster si les jours sont négatifs
-               if (age_date < 0) {
-                  age_month--;
-                  age_date=0;
-                  monthDayBirthday = new Date(dateBorn.getFullYear(),dateBorn.getMonth()+1,0).getDate();
-                  age_date = monthDayBirthday-dateBorn.getDate();
-                  age_date += dateCurrent.getDate();
-   
-               }
-   
-               // 🔹 Ajuster si les mois sont négatifs
-               if (age_month < 0) {
-                  age_month += 12;
-                  age_year--;  // On emprunte une année
-               }
-   
-               
-               const result_year = document.querySelector("#result_year");
-               const result_text_year = document.querySelector("#text_result_year")
-               const textYear = age_year<= 1 ? "year" : "years";
-               result_year.textContent= age_year
-               result_text_year.textContent =textYear;
-               
-               const result_month = document.querySelector("#result_month");
-               const result_text_month = document.querySelector("#text_result_month")
-               const textMonth = age_month<= 1 ? "month" : "months";
-               result_month.textContent = age_month
-               result_text_month.textContent = textMonth;
-               
-               const result_date = document.querySelector("#result_date");
-               const textDay = age_date<= 1 ? "day" : "days";
-               const result_text_day = document.querySelector("#text_result_date")
-               result_date.textContent = age_date
-               result_text_day.textContent = textDay;
-      
+            // Calcul de l'âge
+            let ageYear = dateCurrent.getFullYear() - dateBorn.getFullYear();
+            let ageMonth = dateCurrent.getMonth() - dateBorn.getMonth();
+            let ageDate = dateCurrent.getDate() - dateBorn.getDate();
+
+            //  Ajuster si les jours sont négatifs
+            if (ageDate < 0) {
+               ageMonth--; // On emprunte un mois
+               ageDate=0; // On remet ageDate a zéro
+               monthDayBirthday = new Date(dateCurrent.getFullYear(),dateBorn.getMonth()+1,0).getDate(); // On recupere le nombre de jour du mois de naissance
+               ageDate = monthDayBirthday-dateBorn.getDate();
+               ageDate += dateCurrent.getDate();
+
             }
-         }
-         else {
-            showError(day_label,"","error")
-            showError(month_label,"","error")
-            showError(year_label,"","error")
-            showError(day_field, "","input_error");
-            showError(month_field, "","input_error");
-            showError(year_field, "","input_error");
-            showError(inputdiv,"<p class='error'>Must be in the past<p>",);
-         }
 
+            // 🔹 Ajuster si les mois sont négatifs
+            if (ageMonth < 0) {
+               ageMonth += 12; // On ajoute 12 mois pour repasser en positif
+               ageYear--;  // On emprunte une année
+            }
+
+            
+            const textYear = ageYear<= 1 ? "year" : "years";
+            resultYear.textContent= ageYear
+            result_text_year.textContent =textYear;
+            
+            const textMonth = ageMonth<= 1 ? "month" : "months";
+            resultMonth.textContent = ageMonth
+            result_text_month.textContent = textMonth;
+            
+            const textDay = ageDate<= 1 ? "day" : "days";
+            resultDate.textContent = ageDate
+            result_text_day.textContent = textDay;
+   
+         }
       }
+   }
          
       
       
+   }
+
+   function verifyDateInThePast(dateBorn){
+      dateCurrent = new Date();
+      if(dateBorn<dateCurrent){
+         dayLabel.classList.remove("error");
+         monthLabel.classList.remove("error");
+         yearLabel.classList.remove("error");
+
+         dayField.classList.remove("error");
+         monthField.classList.remove("error");
+         yearField.classList.remove("error");
+         return true;
+      }  
+      ShowMessageAndOrAddClassCSS(dayLabel,"","error")
+      ShowMessageAndOrAddClassCSS(monthLabel,"","error")
+      ShowMessageAndOrAddClassCSS(yearLabel,"","error")
+      ShowMessageAndOrAddClassCSS(dayField, "","input_error");
+      ShowMessageAndOrAddClassCSS(monthField, "","input_error");
+      ShowMessageAndOrAddClassCSS(yearField, "","input_error");
+      ShowMessageAndOrAddClassCSS(yearField,"<p class='error'>Must be in the past<p>",);
+      return false;
    }
    
    
    function verifyDateExist(dateBorn,day,month,year){
 
-         console.log("VerifyDateExist")
-
          // Vérifie si l'année ou le mois ou le jour crée grace a la fonction date n'est pas égal aux parametre envoyé dans la fonction
          if(dateBorn.getFullYear() != year || dateBorn.getMonth() != month-1 || dateBorn.getDate() != day){
-            console.log("Date n'existe pas")
 
-            showError(day_label,"","error")
-            showError(month_label,"","error")
-            showError(year_label,"","error")
-            showError(day_field, "","input_error");
-            showError(month_field, "","input_error");
-            showError(year_field, "","input_error");
-            showError(inputdiv,"<p class='error'>Must be a date valid</p>")
+            ShowMessageAndOrAddClassCSS(dayLabel,"","error")
+            ShowMessageAndOrAddClassCSS(monthLabel,"","error")
+            ShowMessageAndOrAddClassCSS(yearLabel,"","error")
+            ShowMessageAndOrAddClassCSS(dayField, "","input_error");
+            ShowMessageAndOrAddClassCSS(monthField, "","input_error");
+            ShowMessageAndOrAddClassCSS(yearField, "","input_error");
+            ShowMessageAndOrAddClassCSS(yearField,"<p class='error'>Must be a date valid</p>")
             return false
          }
    }
@@ -134,11 +139,12 @@ function verifyDay(day){
 
    if(day){
       if(day>=1 && day<=31){
-         clearError(day_field,"input_error");
+         dayField.classList.remove("input_error");
+         dayLabel.classList.remove("error");
          return true;
       }
-      showError(day_label,"","error")
-      showError(day_field, "<p class='error'>Must be a valid day</p>","input_error")
+      ShowMessageAndOrAddClassCSS(dayLabel,"","error")
+      ShowMessageAndOrAddClassCSS(dayField, "<p class='error'>Must be a valid day</p>","input_error")
       return false;
    }
 
@@ -148,11 +154,12 @@ function verifyMonth(month){
 
    if(month){
       if(month>=1 && month<=12){
-         clearError(month_field,"input_error")
+         monthField.classList.remove("input_error");
+         monthLabel.classList.remove("error");
          return true;
       }
-      showError(month_label,"","error")
-      showError(month_field, "<p class='error'>Must be a valid month</p>","input_error")
+      ShowMessageAndOrAddClassCSS(monthLabel,"","error")
+      ShowMessageAndOrAddClassCSS(monthField, "<p class='error'>Must be a valid month</p>","input_error")
       return false;
    }
 
@@ -162,11 +169,12 @@ function verifyYear(year){
 
    if(year){
       if(year>=1900){
-         clearError(year_field,"input_error")
+         yearField.classList.remove("input_error");
+         yearLabel.classList.remove("error");
          return true;
       }
-      showError(year_label,"","error")
-      showError(year_field, "<p class='error'>Must be a valid year</p>","input_error")
+      ShowMessageAndOrAddClassCSS(yearLabel,"","error")
+      ShowMessageAndOrAddClassCSS(yearField, "<p class='error'>Must be a valid year</p>","input_error")
       return false;
    }
 
@@ -178,29 +186,32 @@ submit.addEventListener("click",(e)=>{
    
    e.preventDefault();
 
-   error = document.querySelectorAll(".error");
+   error = document.querySelectorAll("p.error");
+
    if(error){
       error.forEach(element => {
          element.remove();
       });
    }
 
-   if(day_field.value.trim()===""){
-      showError(day_label,"","error")
-      showError(day_field, "<p class='error'>This field is required</p>","input_error")
+   resultYear.textContent="--"
+   resultMonth.textContent="--"
+   resultDate.textContent="--"
+
+   if(dayField.value.trim()===""){
+      ShowMessageAndOrAddClassCSS(dayLabel,"","error")
+      ShowMessageAndOrAddClassCSS(dayField, "<p class='error'>This field is required</p>","input_error")
    }
-   if(month_field.value.trim()===""){
-      showError(month_label,"","error")
-      showError(month_field, "<p class='error'>This field is required</p>","input_error")
+   if(monthField.value.trim()===""){
+      ShowMessageAndOrAddClassCSS(monthLabel,"","error")
+      ShowMessageAndOrAddClassCSS(monthField, "<p class='error'>This field is required</p>","input_error")
    }
-   if(year_field.value.trim()===""){ 
-      showError(year_label,"","error")  
-      showError(year_field, "<p class='error'>This field is required</p>","input_error")
+   if(yearField.value.trim()===""){ 
+      ShowMessageAndOrAddClassCSS(yearLabel,"","error")  
+      ShowMessageAndOrAddClassCSS(yearField, "<p class='error'>This field is required</p>","input_error")
    }
 
    submit.id="submitsend";
-   calculAgeExact(day_field.value, month_field.value, year_field.value)
-
-
+   calculAgeExact(dayField.value, monthField.value, yearField.value)
 
 });
