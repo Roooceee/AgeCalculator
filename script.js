@@ -134,10 +134,10 @@ function verifyDay(day){
 
    if(day){
       if(day>=1 && day<=31){
-         showError(day_label,"","error")
          clearError(day_field,"input_error");
          return true;
       }
+      showError(day_label,"","error")
       showError(day_field, "<p class='error'>Must be a valid day</p>","input_error")
       return false;
    }
@@ -148,10 +148,10 @@ function verifyMonth(month){
 
    if(month){
       if(month>=1 && month<=12){
-         showError(month_label,"","error")
          clearError(month_field,"input_error")
          return true;
       }
+      showError(month_label,"","error")
       showError(month_field, "<p class='error'>Must be a valid month</p>","input_error")
       return false;
    }
@@ -162,10 +162,10 @@ function verifyYear(year){
 
    if(year){
       if(year>=1900){
-         showError(year_label,"","error")
          clearError(year_field,"input_error")
          return true;
       }
+      showError(year_label,"","error")
       showError(year_field, "<p class='error'>Must be a valid year</p>","input_error")
       return false;
    }
