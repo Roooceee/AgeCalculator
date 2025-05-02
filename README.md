@@ -59,7 +59,7 @@ CSS3 pour la mise en forme et le design responsive.
 JavaScript pour la logique du calcul de l'âge et la validation des champs.
 
 ## Auteurs
-Sébastien LUCAS - Développeur - Portefeuille
+Sébastien LUCAS - Développeur - [Portfolio](https://port-folio-react-lime.vercel.app/)
 
 ## Acknowledgements
 Challenge fourni par Frontend Mentor.
