@@ -17,8 +17,6 @@ L'application permet de calculer l'âge exact d'une personne en fonction de sa d
 
 ## Structure du projet
 
-Le projet est structuré comme suit :
-
 ### HTML
 
 Le fichier `index.html` contient les champs de saisie pour le jour, le mois et l'année, ainsi qu'un bouton pour soumettre le formulaire. La structure HTML est claire et bien adaptée aux formulaires d'entrée utilisateur.
