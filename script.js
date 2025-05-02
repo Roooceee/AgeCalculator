@@ -215,8 +215,6 @@ function verifyYear(year){
 
 }
 
-
-
 submit.addEventListener("click",(e)=>{
    
    e.preventDefault();
@@ -281,6 +279,20 @@ yearField.addEventListener('blur',()=>{
 dayField.addEventListener("focus", () => handleFocus(dayField));
 monthField.addEventListener("focus", () => handleFocus(monthField));
 yearField.addEventListener("focus", () => handleFocus(yearField));
+
+
+//Permet de faire une sécurité pour que des chiffres de 0 a 9 soit dans les champs day,month et year
+dayField.addEventListener('input', (e) => {
+   e.target.value = e.target.value.replace(/[^0-9]/g, '');
+});
+
+monthField.addEventListener('input', (e) => {
+   e.target.value = e.target.value.replace(/[^0-9]/g, '');
+});
+
+yearField.addEventListener('input', (e) => {
+   e.target.value = e.target.value.replace(/[^0-9]/g, '');
+});
 
 
 
