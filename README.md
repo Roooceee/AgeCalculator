@@ -19,12 +19,6 @@ L'application permet de calculer l'âge exact d'une personne en fonction de sa d
 
 Le projet est structuré comme suit :
 
-AgeCalculator/
-├── index.html # Structure HTML de la page
-├── style.css # Fichier de style CSS
-├── script.js # Logique JavaScript pour la validation et le calcul de l'âge
-└── assets/images # Contient le favicon et le svg de la flèche
-
 ### HTML
 
 Le fichier `index.html` contient les champs de saisie pour le jour, le mois et l'année, ainsi qu'un bouton pour soumettre le formulaire. La structure HTML est claire et bien adaptée aux formulaires d'entrée utilisateur.
