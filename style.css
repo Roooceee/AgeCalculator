@@ -130,7 +130,8 @@ form #submitsend {
 
 .error {
    color: var(--color_error)!important;
-   font-size: clamp(8px,13px,30px);
+   font-size: clamp(8px,13px,20px);
+   max-width: 140px;
 }
 
 form #inputdiv input.active {
