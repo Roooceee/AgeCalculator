@@ -284,9 +284,16 @@ yearField.addEventListener('blur', ()=>{
    }
 })
 
+// Ajoute une classe active quand un champ est focus
+dayField.addEventListener("focus", () => handleFocus(dayField));
+monthField.addEventListener("focus", () => handleFocus(monthField));
+yearField.addEventListener("focus", () => handleFocus(yearField));
+
+// Empêche la saisie de caractères non numériques dans les champs
 // Si l'utilisateur corrige un champ suite à une erreur, on relance les vérifs
 [dayField, monthField, yearField].forEach((field) => {
-   field.addEventListener('input', () => {
+   field.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/[^0-9]/g, '');
       const dateError = document.querySelector('p.dateError')
       if(dateError){
          dateError.remove()
@@ -294,17 +301,5 @@ yearField.addEventListener('blur', ()=>{
          verifyMonth(monthField.value)
          verifyYear(yearField.value)
       }
-   })
-})
-
-// Ajoute une classe active quand un champ est focus
-dayField.addEventListener("focus", () => handleFocus(dayField));
-monthField.addEventListener("focus", () => handleFocus(monthField));
-yearField.addEventListener("focus", () => handleFocus(yearField));
-
-// Empêche la saisie de caractères non numériques dans les champs
-[dayField, monthField, yearField].forEach((field) => {
-   field.addEventListener('input', (e) => {
-      e.target.value = e.target.value.replace(/[^0-9]/g, '');
    });
 });
